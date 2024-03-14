@@ -13,10 +13,10 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 // connection with atlas
 const uri = process.env.uri;
-
-// mongoose.connect(uri)
-// .then(() => console.log('Database connected successfully'))
-// .catch((err) => console.error('Database connection error: ', err));
+// console.log(uri)
+mongoose.connect(uri)
+.then(() => console.log('Database connected successfully'))
+.catch((err) => console.error('Database connection error: ', err));
 
 
 const movieSchema = new mongoose.Schema({
@@ -136,10 +136,9 @@ app.get("/countMovie/:lang", async function(req, res){
    
 
 const  start = async() => {
-  await mongoose.connect(uri).then (console.log("connetced db"));
-  await app.listen(3001, function() {
+  await app.listen(3000, function() {
   
-    console.log(`Server started on port 3001`);
+    console.log(`Server started on port 3000`);
   });
 } 
 start();
