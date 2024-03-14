@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieList</title>
-    <link rel="stylesheet" href="../public/style.css">
+    <link rel="stylesheet" href="/style.css">
     <style>
-        h2 {
+        <!-- h2 {
             display: inline-block;
-        }
+        } -->
     </style>
 </head>
 <body>
     
-    <nav style="background-color: #333; color: #fe9090; display: flex; padding: 5px; justify-content: space-between;">
+    <nav class="navbar">
         <div class="left">
             <h2 onclick="openHome()" style="cursor: pointer;">
                 Presidio Movies List
@@ -23,40 +23,45 @@
         <div class="right" >
             <h2>Filter By: </h2>
             <h2>            
-                <select id="language" name="language" onchange="filterByLanguage()" >
+                <select id="language" name="language" onchange="Language()" >
                 <option>Language</option>
                 <option value="English">English</option>
                 <option value="Hindi">Hindi</option>
                 <option value="Tamil">Tamil</option>
-                <option value="Kannad">Kannad</option>
-                <option value="Malyalam">Malyalam</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Malyali">Malyali</option>
                 <option value="All">All</option>
                 </select>
             </h2>
             <h2>            
-                <input type="text" id="releaseYear" placeholder="Release Year" onkeypress="filterByReleaseYear(event)">
+                <input type="text" id="releaseYear" placeholder="Release Year" onkeypress="ReleaseYear(event)">
             </h2>
+            
             <h2>            
-                <input type="text" id="movieName" placeholder="Movie Name" onkeypress="filterByMovieName(event)">
-            </h2>
-            <h2>            
-                <input type="text" id="director" placeholder="Director" onkeypress="filterByDirector(event)">
+                <input type="text" id="director" placeholder="Director" onkeypress="Director(event)">
             </h2>            
             <h2>            
-                <input type="text" id="rating" placeholder="Rating" onkeypress="filterByRating(event)">
+                <input type="text" id="rating" placeholder="Rating" onkeypress="Rating(event)">
             </h2>
         </div>
     </nav>
-
-    <div class="mid">
-        <h2>Select language to find number of movies available:</h2>
-        <select id="numOfMovies" name="numOfMovies" onchange="numOfMovies()" >
+    <div>
+        <h2 style="margin-bottom: 20px;">            
+            Search Movie by name : 
+        </h2>
+        <input type="text" id="movieName" placeholder="Movie Name" style="width: 20%;">
+        <input type="button" style="margin: 10px;" onclick="MovieName(event)" value="Search">
+        <hr>
+    </div>
+    <div class="mid" >
+        <h2>Find the movies present in selected language : </h2>
+        <select id="numOfMovies" style="width: 30%;" name="numOfMovies" onchange="numOfMovies()" >
             <option>Language</option>
             <option value="English">English</option>
             <option value="Hindi">Hindi</option>
             <option value="Tamil">Tamil</option>
-            <option value="Kannad">Kannad</option>
-            <option value="Malyalam">Malyalam</option>
+            <option value="Telugu">Telugu</option>
+            <option value="Malyali">Malyali</option>
             </select>
             <% if (count !== "") { %>
                 <h2 id="count"><%= count %></h2>
@@ -64,20 +69,15 @@
     </div>
  <hr>
  <div>
-    <div class = "card-container" style="display: flex; flex-wrap: wrap; justify-content: center;
-     gap: 20px; padding: 20px;">
+    <div class = "card-container">
         <% for(let i=0 ; i< data.length ; i++){ %>
-            <div class="card" style="width: 220px;
-            height: 290px;
-            border: 1px solid black;
-            box-shadow: 0 4px 8px rgb(0, 0, 0, 0.2);
-            background-color:  rgb(215, 241, 241);
-            margin-right: 15px;">
+            <div class="card">
             <div class="card-body" style="padding: 20px;" >
                 <form action="/updateMovie" method="POST" enctype="multipart/form-data"> 
-                    <input type="hidden" name="_id" value="<%= data[i]._id %>">
+                    
+
                     <label for="movieName">Movie Name: </label>
-                    <img src="/public/uploads/<%= data[i].thumbnail %>" style="height: 70px; width: 60px; border-radius: 20%; object-position: center;">
+                    <img src="/public/uploads/<%= data[i].thumbnail %>">
                 <input type = "text" id="movieName" name="movieName" value="<%=data[i].movieName %>">
                 <label for="director">Director: </label>
                 <input type = "text" id="director" name="director" value="<%=data[i].director %>">
@@ -87,30 +87,26 @@
                     <option >English</option>
                     <option>Hindi</option>
                     <option>Tamil</option>
-                    <option>Kannad</option>
-                    <option>Malyalam</option>
+                    <option>Telugu</option>
+                    <option>Malyali</option>
                 </select>
                 <br>
                 <label for="releaseYear" name="releaseYear" >Release Year:</label>
                 <input type="text" id="releaseYear" name="releaseYear" value="<%=data[i].releaseYear %>">                
                 <label for="rating" name="rating">Rating:</label>
                 <input type="text" id="rating" name="rating" value="<%=data[i].rating %>">
-                <input type="submit" value="Upadte">
+                <input type="submit" value="Update">
                 <input type="button" style="margin: 10px;" onclick="deleteMovie('<%= data[i]._id %>')" value="Delete">
+                <input type="hidden" name="_id" value="<%= data[i]._id %>">
             </form>
             
             
         </div>
     </div>
         <% } %>    
-        <div class="card" style="width: 220px;
-        height: 290px;
-        border: 1px solid black;
-        box-shadow: 0 4px 8px rgb(0, 0, 0, 0.2);
-        background-color:  rgb(215, 241, 241);
-        margin-right: 15px;">
+        <div class="card">
 
-            <div class="card-body" style="padding: 20px;">
+            <div class="card-body" style="padding: 20px; overflow:hidden; margin-top : 100px;">
             
             <form action="/addMovie" method = "POST" enctype="multipart/form-data">
                 
@@ -120,20 +116,24 @@
                 <input type = "text" id="director" name="director">
                 <label for="thumbnail">Thumbnail: </label>
                 <input type = "file" id="thumbnail" name="thumbnail">
+                <br>
                 <label for="language">Language: </label>
                 <select id="language" name="language">
                     <option>Select a Language</option>
                     <option>English</option>
                     <option>Hindi</option>
                     <option>Tamil</option>
-                    <option>Kannad</option>
-                    <option>Malyalam</option>
+                    <option>Telugu</option>
+                    <option>Malyali
+        
+                    </option>
                 </select>
                 <br>
                 <label for="releaseYear" name="releaseYear">Release Year:</label>
                 <input type="text" id="releaseYear" name="releaseYear">                
                 <label for="rating" name="rating">Rating:</label>
-                <input type="float" id="rating" name="rating">
+                <input type="text" id="rating" name="rating">
+                <br>
                 <input type="submit" style="margin: 10px;" style="position: absolute;">
             </form>
         </div>
@@ -146,38 +146,38 @@
  
 </body>
 <script>
-    function filterByLanguage() {
+    function Language() {
         const selectedLanguage = document.getElementById("language").value;
-        let url = `/filterAndSearch/language/${selectedLanguage}`;
+        let url = `/findAnddisplay/language/${selectedLanguage}`;
         if(selectedLanguage === "All") url = '/';
         window.location.href = url;
     }
-    function filterByDirector(event){
+    function Director(event){
         if(event.key === 'Enter'){
             const director= document.getElementById('director').value;
-            const url = `/filterAndSearch/director/${director}`;
+            const url = `/findAnddisplay/director/${director}`;
             window.location.href = url;
         }
     }
-    function filterByReleaseYear(event){
+    function ReleaseYear(event){
         if(event.key === 'Enter'){
             const releaseYear = document.getElementById('releaseYear').value;
-            const url = `/filterAndSearch/releaseYear/${releaseYear}`;
+            const url = `/findAnddisplay/releaseYear/${releaseYear}`;
             window.location.href = url;
         }
     }
     
-    function filterByMovieName(event){
-        if(event.key === 'Enter'){
+    function MovieName(event){
+        
             const movieName= document.getElementById('movieName').value;
-            const url = `/filterAndSearch/movieName/${movieName}`;
+            const url = `/findAnddisplay/movieName/${movieName}`;
             window.location.href = url;
-        }
+        
     }
-    function filterByRating(event){
+    function Rating(event){
         if(event.key === 'Enter'){
             const rating= document.getElementById('rating').value;
-            const url = `/filterAndSearch/rating/${rating}`;
+            const url = `/findAnddisplay/rating/${rating}`;
             window.location.href = url;
         }
     }

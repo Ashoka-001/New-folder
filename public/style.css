@@ -1,0 +1,78 @@
+.navbar {
+    background-color: #5d5c5c;
+    color: #fe9090;
+    display: flex;
+    padding: 5px;
+    justify-content: space-between;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    width: auto;
+    height: auto;
+    border: 1.1px solid rgb(69, 27, 27);
+    box-shadow: 0 4px 8px rgb(0, 0, 0, 0.2);
+    background-color: rgb(250, 187, 156);
+    margin-right: 14px;
+    border-radius: 10%;
+}
+
+img {
+    height: 90px;
+    width: 90px;
+    border-radius: 100%;
+   
+    margin-right: 80px;
+    margin-bottom: 40px;
+}
+
+
+input[type="text"], input[type="password"],select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+input[type="submit" ] {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+input[type="submit"]:hover {
+    background-color: #2980b9;
+}
+input[type="button" ] {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+input[type="button"]:hover {
+    background-color: #2980b9;
+}
+.error {
+    color: red;
+    margin-top: 10px;
+}
