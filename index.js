@@ -136,7 +136,7 @@ app.get("/countMovie/:lang", async function(req, res){
    
 
 const  start = async() => {
-  await mongoose.connect('process.env.uri');
+  await mongoose.connect(uri);
   app.listen(process.env.PORT, function() {
   
     console.log(`Server started on port ${process.env.PORT}`);
